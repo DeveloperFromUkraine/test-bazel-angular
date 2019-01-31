@@ -5,7 +5,7 @@ package(default_visibility = ["//visibility:public"])
 
 ng_module(
     name = "library",
-    srcs = ["ign.module.ts"],
+    srcs = ["my.module.ts"],
     tsconfig = "//:tsconfig.json",
     deps = [
         "@npm//tslib",

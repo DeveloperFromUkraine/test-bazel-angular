@@ -7,6 +7,7 @@ import { LoggerModule } from './logging/logger.module';
 // export * from './logging/logger.module';
 
 import { MessagesModule } from './messages/messages.module';
+import { MaterialModule } from './material/material.module';
 // export * from './messages/messages.module';
 
 
@@ -24,4 +25,4 @@ import { MessagesModule } from './messages/messages.module';
   exports: [MessagesModule, LoggerModule],
   providers: [CurrencyPipe],
 })
-export class IgniteDesignSystemModule { }
+export class MyModule { }
