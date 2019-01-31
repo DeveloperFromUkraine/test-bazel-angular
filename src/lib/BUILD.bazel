@@ -1,0 +1,22 @@
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
+load("@angular//:index.bzl", "ng_module")
+
+package(default_visibility = ["//visibility:public"])
+
+ng_module(
+    name = "library",
+    srcs = ["ign.module.ts"],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@npm//tslib",
+        "@npm//@types",
+        "@angular//packages/core",
+        "@angular//packages/forms",
+        "@angular//packages/common",
+        "@angular//packages/router",
+        "@npm//@angular/material",
+        "//src/lib/messages:messages",
+        "//src/lib/logging:logging",
+        "//src/lib/material:material"
+    ],
+)

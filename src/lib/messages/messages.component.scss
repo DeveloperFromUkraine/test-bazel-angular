@@ -1,0 +1,24 @@
+:host {
+  $component-margin: 16px;
+  $message-spacing: 8px;
+  $dismiss-size: 40px;
+  $dismiss-margin: 8px;
+
+  display: block;
+  position: relative;
+
+    .message-list {
+    display: block;
+    margin-right: $dismiss-size;
+
+    .message:not(:last-child) {
+      margin-bottom: $message-spacing;
+    }
+  }
+
+  .dismiss-button {
+    position: absolute;
+    top: $dismiss-margin;
+    right: $dismiss-margin;
+  }
+}

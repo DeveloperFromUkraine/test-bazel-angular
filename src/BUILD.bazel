@@ -1,0 +1,50 @@
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_library", "ts_config", "ts_devserver")
+load("@angular//:index.bzl", "ng_module", "ng_package")
+load(":defaults.bzl", "PACKAGE_NAME", "PACKAGE_NAME_SCOPE", "LIBRARY_DEPS", "ROLLUP_GLOBALS")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["tsconfig.app.json"])
+
+ts_config(
+    name = "tsconfig-lib",
+    src = "tsconfig.app.json",
+    deps = ["//:tsconfig.json"]
+)
+
+ng_module(
+    name = "untitled-i",
+    module_name = PACKAGE_NAME_SCOPE,
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = [
+            "main.ts",
+            "**/*.spec.ts"
+            ],
+    ),
+    tsconfig = ":tsconfig-lib",
+    deps = [
+        "@npm//tslib", # TODO WTF?!?!?!?!
+#        "@npm//node_modules/zone.js:dist/zone.min.js",
+        "@npm//@types",
+        "@npm//@angular/material",
+#        "@npm//@angular/forms",
+        "@angular//packages/core",
+        "@angular//packages/common",
+        "@angular//packages/platform-browser",
+        "@angular//packages/platform-browser/animations",
+        "@angular//packages/router",
+        "@angular//packages/core/testing",
+        "@angular//packages/platform-browser-dynamic/testing",
+        "//src/lib:library" # Library dependency
+    ],
+)
+
+ng_package(
+    name = PACKAGE_NAME_SCOPE,
+    deps = [":untitled-i",],
+    srcs = ["//:package.json"],
+    globals = ROLLUP_GLOBALS,
+    entry_point = "index.js",
+    entry_point_name = PACKAGE_NAME,
+)

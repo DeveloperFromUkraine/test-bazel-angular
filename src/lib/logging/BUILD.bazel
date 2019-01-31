@@ -1,0 +1,40 @@
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
+load("@angular//:index.bzl", "ng_module")
+
+package(default_visibility = ["//visibility:public"])
+
+ts_library(
+    name = "console-polyfill",
+    srcs = ["console-polyfill.ts"],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@npm//tslib",
+        "@npm//@types",
+        "@angular//packages/core",
+    ]
+)
+
+ts_library(
+    name = "logger-service",
+    srcs = ["logger.service.ts"],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@angular//packages/core",
+        "@npm//tslib",
+        "@npm//@types",
+        ":console-polyfill"
+    ]
+)
+
+ng_module(
+    name = "logging",
+    srcs = ["logger.module.ts"],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@angular//packages/core",
+        "@npm//tslib",
+        "@npm//@types",
+        ":logger-service",
+        ":console-polyfill"
+    ],
+)

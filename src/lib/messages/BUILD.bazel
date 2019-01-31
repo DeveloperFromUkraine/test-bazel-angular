@@ -1,0 +1,35 @@
+load("@angular//:index.bzl", "ng_module")
+load("@io_bazel_rules_sass//:defs.bzl", "sass_binary")
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
+
+package(default_visibility = ["//visibility:public"])
+
+sass_binary(
+    name = "style",
+    src = "messages.component.scss",
+)
+
+ng_module(
+    name = "messages",
+    srcs = glob(
+            include = ["**/*.ts"],
+            exclude = [
+                "main.ts",
+                "**/*.spec.ts"
+                ],
+        ),
+    assets = [":style"],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "@npm//tslib",
+        "@npm//@types",
+        "@angular//packages/core",
+        "@npm//@angular/material",
+        "@angular//packages/router",
+        "@angular//packages/common",
+        "@rxjs",
+        "@rxjs//operators",
+        "//src/lib/messages/types:types",
+        "//src/lib/logging:logging"
+    ]
+)
