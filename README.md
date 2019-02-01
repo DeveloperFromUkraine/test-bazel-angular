@@ -10,7 +10,7 @@ $ yarn
 $ yarn builded
 ```
 
-####Error after start build
+#### Error after start build
 ```bash
 ERROR: /Users/vladimir/WebstormProjects/untitled/src/lib/messages/BUILD.bazel:12:1: Compiling TypeScript (ES5 with ES Modules) //src/lib/messages:messages failed (Exit 1) ngc-wrapped failed: error executing command bazel-out/host/bin/external/angular/packages/bazel/src/ngc-wrapped/ngc-wrapped bazel-out/darwin-fastbuild/bin/src/lib/messages/messages_esm5.tsconfig.json
 
