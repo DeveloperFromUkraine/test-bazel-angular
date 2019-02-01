@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "builded": "bazel build //src:untitled"
+    "builded": "bazel build //src:untitled-i"
   },
   "private": true,
   "dependencies": {

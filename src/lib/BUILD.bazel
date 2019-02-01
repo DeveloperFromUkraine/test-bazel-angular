@@ -8,15 +8,15 @@ ng_module(
     srcs = ["my.module.ts"],
     tsconfig = "//:tsconfig.json",
     deps = [
+        "//src/lib/messages:messages",
+        "//src/lib/logging:logging",
+        "//src/lib/material:material",
         "@npm//tslib",
         "@npm//@types",
         "@angular//packages/core",
         "@angular//packages/forms",
         "@angular//packages/common",
         "@angular//packages/router",
-        "@npm//@angular/material",
-        "//src/lib/messages:messages",
-        "//src/lib/logging:logging",
-        "//src/lib/material:material"
+        "@npm//@angular/material"
     ],
 )

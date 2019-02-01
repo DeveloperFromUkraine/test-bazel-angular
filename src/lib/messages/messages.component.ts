@@ -21,7 +21,7 @@ export interface Message {
         </li>
       </ul>
   `,
-  styleUrls: ['./messages.component.scss'],
+  styleUrls: ['messages.component.css'],
   providers: [Logger],
 })
 export class MessagesComponent implements OnInit, OnDestroy {

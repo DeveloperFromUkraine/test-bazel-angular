@@ -5,7 +5,7 @@ load("@build_bazel_rules_typescript//:defs.bzl", "ts_library")
 package(default_visibility = ["//visibility:public"])
 
 sass_binary(
-    name = "style",
+    name = "messages-component-style",
     src = "messages.component.scss",
 )
 
@@ -18,7 +18,7 @@ ng_module(
                 "**/*.spec.ts"
                 ],
         ),
-    assets = [":style"],
+    assets = [":messages.component.css"],
     tsconfig = "//:tsconfig.json",
     deps = [
         "@npm//tslib",

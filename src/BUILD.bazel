@@ -22,7 +22,7 @@ ng_module(
             "**/*.spec.ts"
             ],
     ),
-    tsconfig = ":tsconfig-lib",
+    tsconfig = "//:tsconfig.json",
     deps = [
         "@npm//tslib", # TODO WTF?!?!?!?!
 #        "@npm//node_modules/zone.js:dist/zone.min.js",
