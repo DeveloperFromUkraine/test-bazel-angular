@@ -64,18 +64,18 @@ rules_typescript_dependencies()
 load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dependencies")
 rules_nodejs_dependencies()
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "npm_install")
+load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "yarn_install")
 # 0.18.0 is needed for .bazelignore
 check_bazel_version("0.21.0")
 
 node_repositories()
 
-npm_install(
+yarn_install(
     name = "npm",
     data = ["//:tsconfig.json"],
     package_json = "//:package.json",
-#    yarn_lock = "//:yarn.lock",
-    package_lock_json="//:package-lock.json"
+    yarn_lock = "//:yarn.lock",
+#    package_lock_json="//:package-lock.json"
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")

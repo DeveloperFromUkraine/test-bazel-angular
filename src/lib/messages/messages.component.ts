@@ -13,7 +13,6 @@ export interface Message {
 @Component({
   selector: 'app-messages',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./messages.component.scss'],
   template: `
       <button class="dismiss-button" type="button" mat-icon-button (click)="clear()">&times;</button>
       <ul class="message-list">
@@ -22,6 +21,7 @@ export interface Message {
         </li>
       </ul>
   `,
+  styleUrls: ['./messages.component.scss'],
   providers: [Logger],
 })
 export class MessagesComponent implements OnInit, OnDestroy {
