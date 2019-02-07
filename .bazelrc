@@ -1,0 +1,47 @@
+# https://docs.bazel.build/versions/master/command-line-reference.html
+
+# Make TypeScript and Angular compilation fast, by keeping a few copies of the
+# compiler running as daemons, and cache SourceFile AST's to reduce parse time.
+#build --strategy=TypeScriptCompile=worker
+#build --strategy=AngularTemplateCompile=worker
+
+# Don't create bazel-* symlinks in the WORKSPACE directory.
+# These require .gitignore and may scare users.
+# Also, it's a workaround for https://github.com/bazelbuild/rules_typescript/issues/12
+# which affects the common case of having `tsconfig.json` in the WORKSPACE directory.
+# Instead, you should run `bazel info bazel-bin` to find out where the outputs went.
+build --symlink_prefix=dist/
+
+#  print test status summary + logs for failed tests
+test --test_output=errors
+
+# Use the Angular 6 compiler
+build --define=compile=legacy
+
+# Turn off legacy external runfiles
+run --nolegacy_external_runfiles
+test --nolegacy_external_runfiles
+
+build:remote --jobs=50
+build:remote --host_javabase=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:jdk8
+build:remote --javabase=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:jdk8
+build:remote --host_java_toolchain=@bazel_tools//tools/jdk:toolchain_hostjdk8
+build:remote --java_toolchain=@bazel_tools//tools/jdk:toolchain_hostjdk8
+build:remote --crosstool_top=@bazel_toolchains//configs/ubuntu16_04_clang/1.1/bazel_0.21.0/default:toolchain
+build:remote --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+build:remote --extra_toolchains=@bazel_toolchains//configs/ubuntu16_04_clang/1.1/bazel_0.21.0/cpp:cc-toolchain-clang-x86_64-default
+build:remote --extra_execution_platforms=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:rbe_ubuntu1604
+build:remote --host_platform=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:rbe_ubuntu1604
+build:remote --platforms=@bazel_toolchains//configs/ubuntu16_04_clang/1.1:rbe_ubuntu1604
+
+build:remote --spawn_strategy=remote
+build:remote --strategy=Javac=remote
+build:remote --strategy=Closure=remote
+build:remote --strategy=TypeScriptCompile=remote
+build:remote --genrule_strategy=remote
+build:remote --define=EXECUTOR=remote
+build:remote --remote_cache=remotebuildexecution.googleapis.com
+build:remote --remote_executor=remotebuildexecution.googleapis.com
+build:remote --tls_enabled=true
+build:remote --remote_timeout=3600
+build:remote --auth_enabled=true

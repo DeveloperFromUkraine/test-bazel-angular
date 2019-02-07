@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "builded": "bazel build //src:untitled-i"
+    "builded": "bazel build //src:untitled-i",
+    "build:rbe": "bazel build //src:untitled-i --config=remote --remote_instance_name=projects/bazel-228915/instances/default_instance --project_id=bazel-228915"
   },
   "private": true,
   "dependencies": {
