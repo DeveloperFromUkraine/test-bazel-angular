@@ -4,11 +4,11 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { LoggerModule } from './logging/logger.module';
-// export * from './logging/logger.module';
+export * from './logging/logger.module';
 
 import { MessagesModule } from './messages/messages.module';
 import { MaterialModule } from './material/material.module';
-// export * from './messages/messages.module';
+export * from './messages/messages.module';
 
 
 
