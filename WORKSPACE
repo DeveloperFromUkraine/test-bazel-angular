@@ -4,13 +4,26 @@
 workspace(name = "untitled")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # GO
 # https://github.com/bazelbuild/rules_go
+#http_archive(
+#    name = "io_bazel_rules_go",
+#    url = "https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz",
+#    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705"
+#)
+git_repository(
+  name = "my_test_rules",
+  remote = "git@github.com:DeveloperFromUkraine/rules_nodejs.git",
+  commit = "vk-test-branch"
+)
+
 http_archive(
-    name = "io_bazel_rules_go",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz",
-    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705"
+  name = "bazel_skylib",
+  url = "https://github.com/bazelbuild/bazel-skylib/archive/0.6.0.zip",
+  strip_prefix = "bazel-skylib-0.6.0",
+  sha256 = "54ee22e5b9f0dd2b42eb8a6c1878dee592cfe8eb33223a7dbbc583a383f6ee1a",
 )
 
 http_archive(
@@ -71,30 +84,29 @@ load("@build_bazel_rules_typescript//:package.bzl", "rules_typescript_dependenci
 rules_typescript_dependencies()
 # build_bazel_rules_nodejs is loaded transitively through rules_typescript_dependencies.
 
-load("@build_bazel_rules_nodejs//:package.bzl", "rules_nodejs_dependencies")
+load("@my_test_rules//:package.bzl", "rules_nodejs_dependencies")
 rules_nodejs_dependencies()
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "check_bazel_version", "node_repositories", "yarn_install")
+load("@my_test_rules//:defs.bzl", "check_bazel_version", "node_repositories", "npm_install")
 # 0.18.0 is needed for .bazelignore
-check_bazel_version("0.21.0")
+check_bazel_version("0.22.0")
 
 node_repositories()
 
-yarn_install(
+npm_install(
     name = "npm",
-    data = ["//:tsconfig.json"],
     package_json = "//:package.json",
-    yarn_lock = "//:yarn.lock",
-#    package_lock_json="//:package-lock.json"
+#    yarn_lock = "//:yarn.lock",
+    package_lock_json="//:package-lock.json"
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
-go_rules_dependencies()
-go_register_toolchains()
+#load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+#go_rules_dependencies()
+#go_register_toolchains()
 
-load("@io_bazel_rules_webtesting//web:repositories.bzl", "browser_repositories", "web_test_repositories")
-web_test_repositories()
-browser_repositories(chromium = True, firefox = True)
+#load("@io_bazel_rules_webtesting//web:repositories.bzl", "browser_repositories", "web_test_repositories")
+#web_test_repositories()
+#browser_repositories(chromium = True, firefox = True)
 
 load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace", "check_rules_typescript_version")
 ts_setup_workspace()
@@ -108,10 +120,3 @@ ng_setup_workspace()
 
 load("@angular_material//:index.bzl", "angular_material_setup_workspace")
 angular_material_setup_workspace()
-
-# Web testing
-load("@io_bazel_rules_webtesting//web:repositories.bzl", "web_test_repositories", "browser_repositories")
-web_test_repositories()
-browser_repositories(
-    chromium = True
-)
